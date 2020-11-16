@@ -125,6 +125,7 @@ func (p *Pipe) Exec(cmdLine string) *Pipe {
 		return p
 	}
 	q := NewPipe()
+	q.lastCmdLine = cmdLine
 	args, ok := shell.Split(cmdLine) // strings.Fields doesn't handle quotes
 	if !ok {
 		return p.WithError(fmt.Errorf("unbalanced quotes or backslashes in [%s]", cmdLine))

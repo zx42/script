@@ -8,13 +8,14 @@ import (
 
 // Pipe represents a pipe object with an associated ReadAutoCloser.
 type Pipe struct {
-	Reader ReadAutoCloser
-	err    error
+	Reader      ReadAutoCloser
+	err         error
+	lastCmdLine string
 }
 
 // NewPipe returns a pointer to a new empty pipe.
 func NewPipe() *Pipe {
-	return &Pipe{ReadAutoCloser{}, nil}
+	return &Pipe{ReadAutoCloser{}, nil, ""}
 }
 
 // Close closes the pipe's associated reader. This is always safe to do, because
