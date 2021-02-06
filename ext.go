@@ -129,8 +129,13 @@ func NewSourceMock() Source {
 // }
 
 func (src *sourceMockT) Exec(cmdS string) Pipe2 {
-	fmt.Fprintf(os.Stderr, "# Exec %s\n", cmdS)
-	return src.NewPipe()
+	newPipe := src.NewPipe()
+	if src.Error() == nil {
+		fmt.Fprintf(os.Stderr, "# Exec '%s'\n", cmdS)
+	} else {
+		newPipe.SetError(src.Error())
+	}
+	return newPipe
 }
 
 func (src *sourceMockT) WriteFile(fname string) (int64, error) {
